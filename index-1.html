@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="fa" dir="rtl" data-theme="night">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>گیم لند | نسخه نمایشی</title>
+<!--CSP-->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob:; base-uri 'none'; form-action 'none'">
+<!--/CSP-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--r:18px;--font:'Vazirmatn',Tahoma,system-ui,sans-serif}
+html[data-theme=night]{--bg:#0a0613;--card:#171028;--card2:#221942;--ink:#f5f0ff;--mut:#b2a5d6;--pri:#a855f7;--pri2:#7c3aed;--onpri:#fff;--acc:#d8b4fe;--line:#33265f;--ok:#34d399;--warn:#fbbf24;--bad:#fb7185;--glow:rgba(124,58,237,.35);--glow2:rgba(168,85,247,.18);--cut:#171028;color-scheme:dark}
+html[data-theme=day]{--bg:#fffdf0;--card:#ffffff;--card2:#fff4b8;--ink:#1d1600;--mut:#6a5710;--pri:#facc15;--pri2:#eab308;--onpri:#1d1600;--acc:#8a5a00;--line:#efdc7c;--ok:#15803d;--warn:#b45309;--bad:#be123c;--glow:rgba(250,204,21,.4);--glow2:rgba(253,224,71,.3);--cut:#fff4b8;color-scheme:light}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.65;padding-bottom:92px;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(60% 38% at 85% -8%,var(--glow),transparent),radial-gradient(50% 40% at 0 100%,var(--glow2),transparent)}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+.ic{display:inline-flex;width:1.25em;height:1.25em;vertical-align:middle}.ic svg{width:100%;height:100%}
+.top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:10px;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.25rem;margin-inline-end:auto}
+.logo{--cut:var(--pri2);width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--pri),var(--pri2));color:var(--onpri);display:grid;place-items:center;box-shadow:0 0 22px var(--glow)}
+.logo .ic{width:24px;height:24px}
+.seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{border:0;background:none;padding:6px 14px;border-radius:999px;cursor:pointer;font-weight:600;font-size:.88rem;min-height:36px}
+.seg button.on{background:linear-gradient(135deg,var(--pri),var(--pri2));color:var(--onpri)}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.iconbtn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;display:grid;place-items:center}
+.demobar{background:var(--card2);border-bottom:1px solid var(--line);font-size:.82rem;color:var(--mut)}
+.demobar .wrap{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:6px;padding-bottom:6px}
+.demobar select,.demobar button{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:4px 10px;min-height:32px;cursor:pointer}
+nav.tabs{position:fixed;bottom:0;inset-inline:0;z-index:30;background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;justify-content:center;padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+nav.tabs button{flex:1;max-width:150px;border:0;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border-radius:14px;font-size:.74rem;font-weight:600;color:var(--mut);min-height:52px}
+nav.tabs button .ic{width:22px;height:22px}
+nav.tabs button.on{color:var(--onpri);background:linear-gradient(135deg,var(--pri),var(--pri2))}
+main{padding-top:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.card+.card,.card+section,section+.card{margin-top:14px}
+h2{font-size:1.15rem;font-weight:800;margin:20px 0 10px;display:flex;align-items:center;gap:8px}
+h3{font-size:1rem;font-weight:800}
+.mut{color:var(--mut);font-size:.86rem}
+.rules{border:1px solid var(--pri);background:linear-gradient(135deg,var(--card2),var(--card));border-radius:var(--r);padding:14px 16px;position:relative;box-shadow:0 0 28px var(--glow)}
+.rules h3{display:flex;gap:8px;align-items:center;margin-bottom:6px;color:var(--acc)}
+.rules ol{padding-inline-start:26px;list-style:persian}.rules li{margin:2px 0}
+.btn{border:0;border-radius:14px;padding:10px 18px;min-height:44px;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--pri),var(--pri2));color:var(--onpri);display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:transform .15s,filter .15s}
+.btn:hover{filter:brightness(1.08)}.btn:active{transform:scale(.97)}
+.btn.sec{background:var(--card2);color:var(--ink);border:1px solid var(--line)}
+.btn.bad{background:var(--bad);color:#fff}.btn.ok{background:var(--ok);color:#06150d}
+.btn.sm{padding:4px 12px;min-height:36px;font-size:.88rem;border-radius:11px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;font-weight:700;padding:2px 10px;border-radius:999px;border:1px solid currentColor}
+.pill.free{color:var(--ok)}.pill.run{color:var(--bad)}.pill.pend{color:var(--warn)}.pill.off,.pill.lock{color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.st{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden}
+.st.busy{border-color:var(--bad)}.st.free{border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
+.st.vip{grid-column:1/-1;background:linear-gradient(120deg,var(--card2),var(--card));border-color:var(--pri)}
+.st-h{display:flex;align-items:center;gap:10px}
+.num{min-width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:1.35rem;background:var(--card2);border:1px solid var(--line);padding:0 8px}
+.st.free .num{box-shadow:0 0 16px var(--glow)}
+.unit{display:flex;align-items:center;gap:8px;justify-content:space-between;flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:10px}
+.badge{font-weight:800;font-size:.8rem;padding:2px 9px;border-radius:8px;background:var(--card2);border:1px solid var(--line)}
+.badge.p5{background:var(--pri);color:var(--onpri);border-color:transparent}
+.big{font-size:2.4rem;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px;line-height:1.2}
+.live{border-color:var(--pri);box-shadow:0 0 30px var(--glow);text-align:center}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.tile b{display:block;font-size:1.4rem}
+.loys{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.loy{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.loy-h{display:flex;justify-content:space-between;margin-bottom:10px}
+.slots{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.slot{aspect-ratio:1;border-radius:50%;border:2px dashed var(--line);display:grid;place-items:center;color:var(--mut);font-size:.8rem}
+.slot.on{border:2px solid var(--pri);background:var(--card2);color:var(--pri);box-shadow:0 0 14px var(--glow);animation:pop .35s}
+.slot .ic{width:62%;height:62%}
+html[data-theme=day] .slot.on{color:#9a6a00}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.row.sp{justify-content:space-between}
+.av{width:40px;height:40px;border-radius:50%;object-fit:cover;display:grid;place-items:center;font-weight:800;color:#fff;flex:none}
+.lb{list-style:none;padding:0}
+.lb li{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.lb li:last-child{border:0}
+.rank{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--card2);flex:none}
+.r1{background:#facc15;color:#2b2000}.r2{background:#cbd5e1;color:#1e293b}.r3{background:#d28a4a;color:#2a1400}
+input,select{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:8px 12px;min-height:44px;width:100%}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+label.f{display:block;margin:10px 0 4px;font-weight:600;font-size:.9rem}
+.auth{max-width:420px;margin:20px auto}
+.err{color:var(--bad);font-size:.88rem;min-height:1.4em;margin-top:6px}
+.ed{display:grid;gap:8px;margin-top:10px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--card2)}
+.ed .row>input{flex:1;min-width:90px}.ed .row>select{width:auto}
+table{width:100%;border-collapse:collapse;font-size:.86rem}
+th,td{padding:8px 6px;text-align:start;border-bottom:1px solid var(--line);white-space:nowrap}
+.scroll{overflow-x:auto}
+.sw{position:relative;width:48px;height:28px;flex:none}
+.sw input{opacity:0;position:absolute;inset:0;width:100%;height:100%;min-height:0;cursor:pointer;z-index:1}
+.sw i{position:absolute;inset:0;border-radius:99px;background:var(--line);transition:.2s}
+.sw i::after{content:'';position:absolute;top:3px;inset-inline-start:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s}
+.sw input:checked+i{background:var(--pri2)}.sw input:checked+i::after{inset-inline-start:23px}
+#toast{position:fixed;top:70px;inset-inline:0;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:90;pointer-events:none}
+#toast div{background:var(--card2);border:1px solid var(--pri);padding:10px 18px;border-radius:14px;box-shadow:0 6px 30px rgba(0,0,0,.35);animation:pop .25s;max-width:92vw}
+#toast div.bad{border-color:var(--bad)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:80;display:grid;place-items:center;padding:16px}
+.modal{background:var(--card);border:1px solid var(--pri);border-radius:var(--r);padding:18px;width:100%;max-width:420px;max-height:90vh;overflow:auto}
+.modal .row{margin-top:14px;justify-content:flex-end}
+#boot{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:100;font-weight:700}
+.deco{position:absolute;inset-inline-end:-8px;top:-8px;opacity:.09;font-size:70px;pointer-events:none}
+@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:none;opacity:1}}
+@media(min-width:768px){
+ body{padding-bottom:30px}
+ nav.tabs{position:sticky;top:61px;bottom:auto;inset-inline:auto;border:0;border-bottom:1px solid var(--line);justify-content:flex-start;padding:8px 16px}
+ nav.tabs button{flex-direction:row;gap:8px;max-width:none;flex:none;padding:6px 18px;font-size:.9rem;min-height:44px}
+}
+@media(max-width:480px){.big{font-size:2rem}.tools{width:100%;justify-content:space-between}.slots{gap:5px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="boot">در حال آماده‌سازی گیم لند…</div>
+<header class="top"><div class="wrap">
+ <div class="brand"><span class="logo" id="logo"></span><span id="shopname">گیم لند</span></div>
+ <div class="tools">
+  <div class="seg" id="demoseg" role="group" aria-label="حالت نمایشی"><button id="dUser">نمایش مشتری</button><button id="dAdmin">نمایش مدیر</button></div>
+  <button class="iconbtn" id="themeBtn" aria-label="تغییر شب و روز"></button>
+ </div>
+</div></header>
+<div class="demobar" id="demobar"><div class="wrap">
+ <span>حالت نمایشی: داده‌ها فقط روی همین مرورگر می‌مانند.</span>
+ <label>سرعت زمان: <select id="speed" aria-label="سرعت زمان"><option value="1">×۱ عادی</option><option value="60">×۶۰</option><option value="300">×۳۰۰</option></select></label>
+ <button id="resetBtn">بازنشانی داده‌ها</button>
+</div></div>
+<nav class="tabs" id="nav" aria-label="منو"></nav>
+<main class="wrap" id="app"></main>
+<div id="toast" aria-live="polite"></div>
+<script>
+'use strict';
+/* ======================================================================
+   GAME LAND — DEMO. Everything below runs in the browser only.
+   FOR PRODUCTION (Supabase) the following MUST be enforced SERVER-SIDE:
+   - RLS on every table; users can only read/insert their own rows.
+   - Only role=admin may: approve/reject/stop sessions, edit prices/consoles/rules,
+     award/redeem stamps, reset passwords, delete users.
+   - Passwords are handled by Supabase Auth (never stored by us). Rate-limit logins.
+   - A console can have only ONE active session (unique partial index).
+   - Billing must be computed on the server from server timestamps.
+   All data access in this file goes through the API object (swap for Supabase calls).
+   ====================================================================== */
+const LS = 'gameland_demo_v1';
+const DEMO_PW = 'Demo#1234', ADMIN_PW = 'Admin#1234';
+const ACTIVE = ['pending', 'countdown', 'running'];
+const S = { db: null, session: null, demo: true, tab: 'home', speed: 1, authMode: 'login', lbTab: 'day', lastReal: Date.now(), lastAct: Date.now(), fails: {}, lock: {} };
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const FA = '۰۱۲۳۴۵۶۷۸۹';
+const fa = n => String(n).replace(/\d/g, d => FA[d]);
+const money = n => fa(Math.round(n).toLocaleString('en-US')).replace(/,/g, '٬');
+const en = s => String(s).replace(/[۰-۹]/g, d => FA.indexOf(d)).replace(/[,٬\s]/g, '');
+const uid = () => Math.random().toString(36).slice(2, 10);
+const h = (t, a = {}, ...c) => {
+  const e = document.createElement(t);
+  for (const k in a) {
+    const v = a[k];
+    if (k === 'class') e.className = v;
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v);
+    else if (v === true) e.setAttribute(k, '');
+    else if (v !== false && v != null) e.setAttribute(k, v);
+  }
+  c.flat(9).forEach(x => { if (x == null || x === false) return; e.append(x.nodeType ? x : document.createTextNode(x)); });
+  return e;
+};
+const ICONS = {
+  sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+  moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+  gamepad: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M6.8 6h10.4a5 5 0 0 1 4.9 4l.9 5.2a3.3 3.3 0 0 1-5.6 2.9L15.5 16h-7l-1.9 2.1a3.3 3.3 0 0 1-5.6-2.9l.9-5.2a5 5 0 0 1 4.9-4z"/><path d="M7 9.2v1.5H5.5v1.6H7v1.5h1.6v-1.5h1.5v-1.6H8.6V9.2z" fill="var(--cut)"/><circle cx="15.6" cy="9.8" r="1.1" fill="var(--cut)"/><circle cx="18.3" cy="12.2" r="1.1" fill="var(--cut)"/></svg>',
+  star: '<svg viewBox="0 0 24 24"><polygon fill="currentColor" points="12,1.8 15.1,8.6 22.4,9.4 17,14.4 18.5,21.7 12,18 5.5,21.7 7,14.4 1.6,9.4 8.9,8.6"/></svg>',
+  home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z"/></svg>',
+  tv: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18v12H3zM8 21h8M12 17v4"/></svg>',
+  card: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 6h18v12H3zM3 10h18"/></svg>',
+  trophy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg>',
+  user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"/></svg>',
+  dash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 3h8v8H3zM13 3h8v5h-8zM13 10h8v11h-8zM3 13h8v8H3z"/></svg>',
+  gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>',
+  list: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>',
+  plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  minus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>',
+  up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>',
+  down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>',
+  x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>'
+};
+const icon = (n, c = '') => { const s = document.createElement('span'); s.className = 'ic ' + c; s.innerHTML = ICONS[n] || ''; return s; }; // constants only
+const toast = (m, bad) => { const t = h('div', { class: bad ? 'bad' : '' }, m); $('#toast').append(t); setTimeout(() => t.remove(), 3200); };
+function modal(title, body, actions) {
+  const ov = h('div', { class: 'ov', role: 'dialog', 'aria-modal': 'true' });
+  const close = () => ov.remove();
+  const m = h('div', { class: 'modal' }, h('h3', {}, title), body, h('div', { class: 'row' },
+    actions.map(a => h('button', { class: 'btn ' + (a.cls || ''), onclick: () => { if (a.fn && a.fn(close) === false) return; if (!a.keep) close(); } }, a.label))));
+  ov.append(m); ov.addEventListener('click', e => { if (e.target === ov) close(); });
+  document.body.append(ov); const i = m.querySelector('input'); if (i) i.focus();
+  return close;
+}
+const fmtDur = ms => { const s = Math.max(0, Math.floor(ms / 1000)); const p = n => fa(String(n).padStart(2, '0')); return p(Math.floor(s / 3600)) + ':' + p(Math.floor(s / 60) % 60) + ':' + p(s % 60); };
+const hours = m => fa((m / 60).toFixed(1)).replace('.', '٫');
+const dayStart = t => { const d = new Date(t); d.setHours(0, 0, 0, 0); return +d; };
+const fmtDate = t => { try { return new Date(t).toLocaleString('fa-IR', { dateStyle: 'short', timeStyle: 'short' }); } catch (e) { return new Date(t).toISOString(); } };
+const b64e = buf => btoa(String.fromCharCode(...new Uint8Array(buf)));
+const b64d = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+const avColor = s => { let x = 0; for (const c of s) x = (x * 31 + c.charCodeAt(0)) % 360; return `hsl(${x} 55% 42%)`; };
+function avatar(u, sz = 40) {
+  const st = `width:${sz}px;height:${sz}px;font-size:${sz * .42}px`;
+  if (u.photo && /^data:image\/jpeg;base64,/.test(u.photo)) return h('img', { class: 'av', src: u.photo, alt: u.name, style: st });
+  return h('div', { class: 'av', style: st + ';background:' + avColor(u.name), 'aria-hidden': 'true' }, [...u.name][0].toUpperCase());
+}
+
+/* ---------- crypto (PBKDF2, per-user salt) ---------- */
+async function hashPw(pw, salt) {
+  if (!(window.crypto && crypto.subtle)) { let x = 5381; for (const c of salt + pw) x = ((x << 5) + x + c.charCodeAt(0)) | 0; return 'weak' + x; } // demo fallback only
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveBits']);
+  return b64e(await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: b64d(salt), iterations: 100000 }, key, 256));
+}
+const newSalt = () => b64e(crypto.getRandomValues(new Uint8Array(16)));
+const safeEq = (a, b) => { if (a.length !== b.length) return false; let r = 0; for (let i = 0; i < a.length; i++) r |= a.charCodeAt(i) ^ b.charCodeAt(i); return r === 0; };
+
+/* ---------- persistence ---------- */
+function save() { try { S.db.T = S.db.T; localStorage.setItem(LS, JSON.stringify(S.db)); } catch (e) { } }
+function load() {
+  try { const d = JSON.parse(localStorage.getItem(LS)); if (d && d.v === 1 && Array.isArray(d.stations) && Array.isArray(d.users) && Array.isArray(d.sessions)) return d; } catch (e) { }
+  return null;
+}
+async function seed() {
+  const T0 = Date.now();
+  const mk = async (name, role, pw) => { const salt = newSalt(); return { id: 'u_' + uid(), name, role, salt, hash: await hashPw(pw, salt), photo: null, loy: { s1: 0, s15: 0, c1: 0, c15: 0 } }; };
+  const admin = await mk('admin', 'admin', ADMIN_PW), demo = await mk('demo_player', 'user', DEMO_PW);
+  admin.id = 'u_admin'; demo.id = 'u_demo'; demo.loy = { s1: 4, s15: 3, c1: 0, c15: 1 };
+  const names = ['Reza_X', 'Sara_Gamer', 'Ali_PS', 'Mahdi77', 'Kian', 'Niloofar', 'Amir_FIFA', 'Parsa'];
+  const others = []; for (const n of names) { const u = await mk(n, 'user', DEMO_PW); u.loy = { s1: Math.floor(Math.random() * 6), s15: Math.floor(Math.random() * 6), c1: Math.floor(Math.random() * 2), c15: Math.floor(Math.random() * 2) }; others.push(u); }
+  const users = [admin, demo, ...others];
+  const mkSt = (id, label, units, extra = {}) => ({ id, label, shared: true, disabled: false, room: false, units: units.map(t => ({ id: id + '-' + t, type: t, price: t === 'ps5' ? 110000 : 80000 })), ...extra });
+  const stations = ['۱', '۲', '۳', '۴', '۵'].map((l, i) => mkSt('s' + (i + 1), l, ['ps4']));
+  stations.push(mkSt('s6', '۶', ['ps4', 'ps5']), mkSt('s6p', '۶+', ['ps4', 'ps5']), mkSt('s7', '۷', ['ps4']), mkSt('s8', '۸', ['ps4']), mkSt('vip', 'اتاق VIP', ['ps4'], { room: true }));
+  let seedv = 7; const rnd = () => { seedv |= 0; seedv = seedv + 0x6D2B79F5 | 0; let t = Math.imul(seedv ^ seedv >>> 15, 1 | seedv); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const units = stations.flatMap(s => s.units.map(u => ({ s, u })));
+  const sessions = [], durs = [30, 45, 60, 60, 75, 90, 90, 120, 150, 180];
+  for (let i = 0; i < 52; i++) {
+    const u = others.concat(demo)[Math.floor(rnd() * rnd() * 9)], su = units[Math.floor(rnd() * units.length)];
+    const dur = durs[Math.floor(rnd() * durs.length)], day = i < 7 ? 0 : Math.floor(rnd() * 30);
+    const endT = day === 0 ? T0 - 36e5 * (0.5 + rnd() * 6) : T0 - day * 864e5 - rnd() * 8 * 36e5;
+    sessions.push({ id: uid(), stationId: su.s.id, unitId: su.u.id, userId: u.id, status: 'done', startT: endT - dur * 6e4, endT, rate: su.u.price, minutes: dur, cost: Math.round(su.u.price * dur / 60) });
+  }
+  const rz = others[0], sg = others[1];
+  sessions.push({ id: uid(), stationId: 's3', unitId: 's3-ps4', userId: rz.id, status: 'running', startT: T0 - 25 * 6e4, rate: 80000 });
+  sessions.push({ id: uid(), stationId: 's7', unitId: 's7-ps4', userId: sg.id, status: 'pending', reqT: T0 });
+  return { v: 1, T: T0, shop: { name: 'گیم لند', tagline: 'بهترین جا برای بازی PS4 و PS5' }, rules: ['بابت افتادن دسته ۴۰۰ هزار تومان گرفته می‌شود', 'بعد از بازی کنسول را خاموش نکنید', 'از صدای بلند یا آزاردهنده دوری کنید'].map(t => ({ id: uid(), text: t })), loyalty: { slots: 6, need15: 2, r1: '۱ ساعت بازی رایگان', r15: 'بردن کنسول به خانه برای ۱۲ ساعت' }, stations, users, sessions, lbResetAt: 0 };
+}
+
+/* ---------- db lookups ---------- */
+const user = id => S.db.users.find(u => u.id === id);
+const me = () => S.session && user(S.session.userId);
+const stOf = unitId => S.db.stations.find(s => s.units.some(u => u.id === unitId));
+const unitOf = id => { for (const s of S.db.stations) { const u = s.units.find(x => x.id === id); if (u) return u; } };
+const occ = (st, u) => S.db.sessions.find(s => s.stationId === st.id && ACTIVE.includes(s.status) && (st.shared || s.unitId === u.id));
+const activeOf = userId => S.db.sessions.find(s => s.userId === userId && ACTIVE.includes(s.status));
+const minsOf = s => Math.max(1, Math.ceil((S.db.T - s.startT) / 6e4));
+const costOf = s => s.status === 'done' ? s.cost : Math.round(s.rate * minsOf(s) / 60);
+const sessOf = id => S.db.sessions.find(s => s.id === id);
+const unitName = id => { const s = stOf(id), u = unitOf(id); return s && u ? (s.room ? s.label : 'کنسول ' + s.label) + ' (' + u.type.toUpperCase() + ')' : '—'; };
+const totalMin = uid_ => S.db.sessions.reduce((a, s) => a + (s.status === 'done' && s.userId === uid_ ? s.minutes : 0), 0);
+const need = r => { if (!S.session || (r && S.session.role !== r)) throw new Error('اجازه‌ی این کار را نداری'); };
+const cleanText = (t, max) => { t = String(t).replace(/[\u0000-\u001f]/g, ' ').trim(); if (!t || t.length > max) throw new Error('متن خالی یا بیشتر از ' + fa(max) + ' حرف است'); return t; };
+const cleanPrice = v => { const n = parseInt(en(v), 10); if (!(n >= 1000 && n <= 5000000)) throw new Error('قیمت باید بین ۱٬۰۰۰ و ۵٬۰۰۰٬۰۰۰ تومان باشد'); return n; };
+
+/* ---------- API: single gateway for all data changes (swap for Supabase later) ---------- */
+const API = {
+  async signup(name, pw, photo) {
+    name = String(name).trim();
+    if (!/^[A-Za-z0-9_؀-ۿ ]{3,20}$/.test(name)) throw new Error('نام کاربری ۳ تا ۲۰ حرف باشد (فارسی، انگلیسی، عدد یا _)');
+    if (String(pw).length < 8 || pw.length > 64) throw new Error('رمز باید ۸ تا ۶۴ کاراکتر باشد');
+    if (S.db.users.some(u => u.name.toLowerCase() === name.toLowerCase())) throw new Error('این نام کاربری قبلاً گرفته شده');
+    const salt = newSalt(); const u = { id: 'u_' + uid(), name, role: 'user', salt, hash: await hashPw(pw, salt), photo: photo || null, loy: { s1: 0, s15: 0, c1: 0, c15: 0 } };
+    S.db.users.push(u); save(); return u;
+  },
+  async login(name, pw) {
+    const k = String(name).trim().toLowerCase(), now = Date.now();
+    if (S.lock[k] && S.lock[k] > now) throw new Error('چند بار اشتباه زدی؛ ' + fa(Math.ceil((S.lock[k] - now) / 1000)) + ' ثانیه صبر کن');
+    const u = S.db.users.find(x => x.name.toLowerCase() === k);
+    const hsh = await hashPw(String(pw), u ? u.salt : 'AAAAAAAAAAAAAAAAAAAAAA==');
+    if (!u || !safeEq(hsh, u.hash)) { S.fails[k] = (S.fails[k] || 0) + 1; if (S.fails[k] >= 5) { S.lock[k] = now + 60000; S.fails[k] = 0; } throw new Error('نام کاربری یا رمز اشتباه است'); }
+    S.fails[k] = 0; return u;
+  },
+  setPhoto(p) { need('user'); me().photo = p; save(); },
+  request(unitId) {
+    need('user'); const st = stOf(unitId), u = unitOf(unitId);
+    if (!st || !u) throw new Error('کنسول پیدا نشد');
+    if (st.disabled) throw new Error('این کنسول غیرفعال است');
+    if (occ(st, u)) throw new Error('این کنسول الان آزاد نیست');
+    if (activeOf(S.session.userId)) throw new Error('همین الان یک درخواست یا بازی فعال داری');
+    S.db.sessions.push({ id: uid(), stationId: st.id, unitId, userId: S.session.userId, status: 'pending', reqT: S.db.T }); save();
+  },
+  cancel(sid) { need('user'); const s = sessOf(sid); if (!s || s.userId !== S.session.userId || s.status !== 'pending') throw new Error('امکان لغو نیست'); s.status = 'rejected'; s.note = 'لغو توسط مشتری'; save(); },
+  approve(sid) {
+    need('admin'); const s = sessOf(sid); if (!s || s.status !== 'pending') throw new Error('این درخواست دیگر در انتظار نیست');
+    const st = stOf(s.unitId), u = unitOf(s.unitId); if (!st || !u || st.disabled) throw new Error('کنسول غیرفعال یا حذف شده');
+    if (S.db.sessions.some(x => x !== s && x.stationId === st.id && ['countdown', 'running'].includes(x.status) && (st.shared || x.unitId === s.unitId))) throw new Error('این کنسول هم‌اکنون در حال بازی است');
+    s.rate = u.price; s.status = 'countdown'; s.goAt = Date.now() + 5000; save();
+  },
+  reject(sid) { need('admin'); const s = sessOf(sid); if (!s || s.status !== 'pending') throw new Error('درخواست در انتظار نیست'); s.status = 'rejected'; s.note = 'رد توسط مدیر'; save(); },
+  stop(sid) {
+    need('admin'); const s = sessOf(sid); if (!s || !['running', 'countdown'].includes(s.status)) throw new Error('این بازی در حال اجرا نیست');
+    if (s.status === 'countdown') { s.status = 'rejected'; s.note = 'لغو قبل از شروع'; save(); return s; }
+    s.endT = S.db.T; s.minutes = minsOf(s); s.cost = Math.round(s.rate * s.minutes / 60); s.status = 'done';
+    const u = user(s.userId), L = S.db.loyalty; s.stamp = null;
+    if (u) {
+      const k = s.minutes >= 90 ? 's15' : s.minutes >= 60 ? 's1' : null;
+      if (k) { u.loy[k]++; s.stamp = k === 's15' ? '15' : '1'; if (u.loy[k] >= L.slots) { u.loy[k] = 0; u.loy[k === 's1' ? 'c1' : 'c15']++; s.cardFull = true; } }
+    }
+    save(); return s;
+  },
+  /* consoles */
+  setPrice(unitId, v) { need('admin'); const u = unitOf(unitId); if (!u) throw new Error('؟'); u.price = cleanPrice(v); save(); },
+  addStation(label, room) { need('admin'); label = cleanText(label, 20); if (S.db.stations.some(s => s.label === label)) throw new Error('این نام قبلاً هست'); const id = 's' + uid(); S.db.stations.push({ id, label, room: !!room, shared: true, disabled: false, units: [{ id: id + '-ps4', type: 'ps4', price: 80000 }] }); save(); },
+  renameStation(id, label) { need('admin'); const s = S.db.stations.find(x => x.id === id); s.label = cleanText(label, 20); save(); },
+  flag(id, key, val) { need('admin'); if (!['disabled', 'shared'].includes(key)) throw new Error('؟'); const s = S.db.stations.find(x => x.id === id); if (key === 'disabled' && val && S.db.sessions.some(x => x.stationId === id && ACTIVE.includes(x.status))) throw new Error('الان درخواست یا بازی فعال دارد'); s[key] = !!val; save(); },
+  moveStation(id, d) { need('admin'); const a = S.db.stations, i = a.findIndex(x => x.id === id), j = i + d; if (j < 0 || j >= a.length) return; [a[i], a[j]] = [a[j], a[i]]; save(); },
+  delStation(id) { need('admin'); if (S.db.sessions.some(x => x.stationId === id && ACTIVE.includes(x.status))) throw new Error('الان درخواست یا بازی فعال دارد'); S.db.stations = S.db.stations.filter(x => x.id !== id); save(); },
+  addUnit(id, type) { need('admin'); if (!['ps4', 'ps5'].includes(type)) throw new Error('؟'); const s = S.db.stations.find(x => x.id === id); s.units.push({ id: id + '-' + type + '-' + uid().slice(0, 3), type, price: type === 'ps5' ? 110000 : 80000 }); save(); },
+  delUnit(sid, unitId) { need('admin'); const s = S.db.stations.find(x => x.id === sid); if (s.units.length < 2) throw new Error('هر ایستگاه حداقل یک کنسول لازم دارد'); if (S.db.sessions.some(x => x.unitId === unitId && ACTIVE.includes(x.status))) throw new Error('الان فعال است'); s.units = s.units.filter(u => u.id !== unitId); save(); },
+  /* settings */
+  setShop(k, v) { need('admin'); S.db.shop[k] = cleanText(v, k === 'name' ? 24 : 70); save(); },
+  addRule(t) { need('admin'); S.db.rules.push({ id: uid(), text: cleanText(t, 140) }); save(); },
+  editRule(id, t) { need('admin'); S.db.rules.find(r => r.id === id).text = cleanText(t, 140); save(); },
+  delRule(id) { need('admin'); S.db.rules = S.db.rules.filter(r => r.id !== id); save(); },
+  setLoy(k, v) {
+    need('admin'); const L = S.db.loyalty;
+    if (k === 'slots') { const n = parseInt(en(v), 10); if (!(n >= 2 && n <= 6)) throw new Error('تعداد جای مهر بین ۲ تا ۶ باشد'); L.slots = n; S.db.users.forEach(u => { u.loy.s1 = Math.min(u.loy.s1, n - 1); u.loy.s15 = Math.min(u.loy.s15, n - 1); }); }
+    else if (k === 'need15') { const n = parseInt(en(v), 10); if (!(n >= 1 && n <= 10)) throw new Error('عدد بین ۱ تا ۱۰'); L.need15 = n; }
+    else if (k === 'r1' || k === 'r15') L[k] = cleanText(v, 80);
+    save();
+  },
+  adjStamp(userId, kind, d) {
+    need('admin'); const u = user(userId), L = S.db.loyalty, s = 's' + kind, c = 'c' + kind; if (!u) return;
+    u.loy[s] += d;
+    if (u.loy[s] >= L.slots) { u.loy[s] = 0; u.loy[c]++; }
+    if (u.loy[s] < 0) { if (u.loy[c] > 0) { u.loy[c]--; u.loy[s] = L.slots - 1; } else u.loy[s] = 0; }
+    save();
+  },
+  redeem(userId, kind) {
+    need('admin'); const u = user(userId), L = S.db.loyalty;
+    if (kind === '1') { if (u.loy.c1 < 1) throw new Error('کارت ۱ ساعته‌ی پُر ندارد'); u.loy.c1--; }
+    else { if (u.loy.c15 < L.need15) throw new Error('کارت ۱.۵ ساعته‌ی پُر کافی ندارد'); u.loy.c15 -= L.need15; }
+    save();
+  },
+  async resetPw(userId, pw) { need('admin'); if (String(pw).length < 8 || pw.length > 64) throw new Error('رمز باید ۸ تا ۶۴ کاراکتر باشد'); const u = user(userId); u.salt = newSalt(); u.hash = await hashPw(pw, u.salt); save(); },
+  delUser(userId) { need('admin'); const u = user(userId); if (!u || u.role === 'admin') throw new Error('این کاربر حذف نمی‌شود'); if (activeOf(userId)) throw new Error('الان درخواست یا بازی فعال دارد'); S.db.users = S.db.users.filter(x => x.id !== userId); save(); },
+  resetLB() { need('admin'); S.db.lbResetAt = S.db.T; save(); }
+};
+const act = (fn, ok) => async () => { try { await fn(); if (ok) toast(ok); render(); } catch (e) { toast(e.message || 'خطا', true); render(); } };
+async function resizePhoto(f) {
+  if (!f) return null; if (!/^image\//.test(f.type) || f.size > 6e6) throw new Error('یک عکس معتبر (تا ۶ مگابایت) انتخاب کن');
+  const bm = await createImageBitmap(f), c = document.createElement('canvas'); c.width = c.height = 128; const m = Math.min(bm.width, bm.height);
+  c.getContext('2d').drawImage(bm, (bm.width - m) / 2, (bm.height - m) / 2, m, m, 0, 0, 128, 128); return c.toDataURL('image/jpeg', .8);
+}
+
+/* ---------- views ---------- */
+const sw = (checked, fn) => h('label', { class: 'sw' }, h('input', { type: 'checkbox', checked, onchange: e => fn(e.target.checked) }), h('i'));
+const inp = (val, fn, attrs = {}) => h('input', { value: val, maxlength: 140, ...attrs, onchange: e => fn(e.target.value) });
+const guard = fn => async (...a) => { try { await fn(...a); render(); } catch (e) { toast(e.message || 'خطا', true); render(); } };
+
+function vRules() {
+  return h('section', { class: 'rules' }, h('h3', {}, icon('shield'), 'قوانین ' + S.db.shop.name), h('ol', {}, S.db.rules.map(r => h('li', {}, r.text))));
+}
+function vAuth() {
+  const signup = S.authMode === 'signup'; let photo = null;
+  const err = h('div', { class: 'err', role: 'alert' });
+  const un = h('input', { id: 'un', autocomplete: 'username', maxlength: 20, required: true });
+  const pw = h('input', { id: 'pw', type: 'password', autocomplete: signup ? 'new-password' : 'current-password', maxlength: 64, required: true });
+  const prev = h('div', { style: 'margin-top:8px' });
+  const file = h('input', { type: 'file', accept: 'image/*', onchange: async e => { try { photo = await resizePhoto(e.target.files[0]); prev.replaceChildren(avatar({ name: un.value || '?', photo }, 56)); } catch (x) { err.textContent = x.message; } } });
+  const form = h('form', {
+    onsubmit: async e => {
+      e.preventDefault(); err.textContent = '';
+      try {
+        const u = signup ? await API.signup(un.value, pw.value, photo) : await API.login(un.value, pw.value);
+        S.session = { userId: u.id, role: u.role }; S.demo = false; S.tab = u.role === 'admin' ? 'dash' : 'home'; S.lastAct = Date.now(); render();
+      } catch (x) { err.textContent = x.message; }
+    }
+  },
+    h('label', { class: 'f', for: 'un' }, 'نام کاربری'), un,
+    h('label', { class: 'f', for: 'pw' }, 'رمز عبور (حداقل ۸ کاراکتر)'), pw,
+    signup ? [h('label', { class: 'f' }, 'عکس پروفایل (اختیاری)'), file, prev] : null,
+    err, h('button', { class: 'btn', type: 'submit', style: 'width:100%;margin-top:8px' }, signup ? 'ساخت حساب' : 'ورود'));
+  return h('div', { class: 'card auth' }, h('h3', {}, signup ? 'ثبت‌نام' : 'ورود به حساب'),
+    h('p', { class: 'mut' }, 'برای ساخت حساب فقط نام کاربری و رمز لازم است؛ شماره‌ی موبایل نمی‌خواهیم.'), form,
+    h('button', { class: 'btn sec', style: 'width:100%;margin-top:10px', onclick: () => { S.authMode = signup ? 'login' : 'signup'; render(); } }, signup ? 'حساب دارم، ورود' : 'حساب ندارم، ثبت‌نام'),
+    h('p', { class: 'mut', style: 'margin-top:12px' }, 'حساب‌های نمایشی: demo_player با رمز ', h('b', { dir: 'ltr' }, DEMO_PW), ' — مدیر: admin با رمز ', h('b', { dir: 'ltr' }, ADMIN_PW)));
+}
+
+function unitState(st, u) {
+  if (st.disabled) return { k: 'off', t: 'غیرفعال' };
+  const s = occ(st, u); if (!s) return { k: 'free', t: 'آزاد' };
+  if (s.unitId !== u.id) return { k: 'lock', t: 'تلویزیون مشترک اشغال است' };
+  return s.status === 'pending' ? { k: 'pend', t: 'درخواست شده' } : { k: 'run', t: s.status === 'countdown' ? 'در حال شروع…' : 'در حال بازی' };
+}
+function stCard(st) {
+  const busy = S.db.sessions.some(s => s.stationId === st.id && ACTIVE.includes(s.status));
+  return h('div', { class: 'st ' + (st.room ? 'vip ' : '') + (busy ? 'busy' : st.disabled ? '' : 'free') },
+    h('div', { class: 'st-h' }, h('div', { class: 'num' }, st.room ? 'VIP' : st.label),
+      h('div', {}, h('b', {}, st.room ? st.label : 'ایستگاه بازی'), h('div', { class: 'mut' }, st.units.length > 1 ? 'PS4 و PS5 با یک تلویزیون' : (st.units[0] ? st.units[0].type.toUpperCase() : '')))),
+    st.units.map(u => {
+      const t = unitState(st, u);
+      return h('div', { class: 'unit' },
+        h('div', { class: 'row' }, h('span', { class: 'badge ' + (u.type === 'ps5' ? 'p5' : '') }, u.type.toUpperCase()), h('span', { class: 'mut' }, money(u.price) + ' تومان / ساعت')),
+        h('span', { class: 'pill ' + t.k }, t.t),
+        t.k === 'free' ? h('button', { class: 'btn sm', style: 'width:100%', onclick: act(() => API.request(u.id), 'درخواستت برای مدیر فرستاده شد') }, 'درخواست اجاره') : null);
+    }));
+}
+function mySess() {
+  const s = activeOf(S.session.userId), u = me();
+  if (!s) return null;
+  const nm = unitName(s.unitId);
+  if (s.status === 'pending') return h('div', { class: 'card live' }, h('h3', {}, 'درخواست ' + nm + ' ثبت شد'), h('p', { class: 'mut' }, 'منتظر تأیید مدیر…'), h('button', { class: 'btn sec sm', onclick: act(() => API.cancel(s.id)) }, 'لغو درخواست'));
+  if (s.status === 'countdown') return h('div', { class: 'card live' }, h('h3', {}, 'تأیید شد! ' + nm), h('p', { class: 'mut' }, 'شروع بازی تا'), h('div', { class: 'big', 'data-live': 'cd', 'data-sid': s.id }, '۵'));
+  return h('div', { class: 'card live' }, h('h3', {}, 'در حال بازی: ' + nm), h('div', { class: 'big', 'data-live': 'time', 'data-sid': s.id }, '۰۰:۰۰:۰۰'),
+    h('div', { class: 'big', style: 'font-size:1.5rem;color:var(--acc)', 'data-live': 'cost', 'data-sid': s.id }, ''),
+    h('p', { class: 'mut' }, 'هر ساعت ' + money(s.rate) + ' تومان؛ حساب دقیقه‌ای. برای پایان بازی با مدیر هماهنگ کن.'));
+}
+function loyCard(kind, u) {
+  const L = S.db.loyalty, n = u.loy['s' + kind];
+  return h('div', { class: 'loy' }, h('div', { class: 'loy-h' }, h('b', {}, kind === '1' ? 'کارت ۱ ساعته' : 'کارت ۱.۵ ساعته'), h('span', { class: 'mut' }, fa(n) + ' از ' + fa(L.slots))),
+    h('div', { class: 'slots', style: 'grid-template-columns:repeat(' + L.slots + ',1fr)' }, Array.from({ length: L.slots }, (_, i) => h('div', { class: 'slot' + (i < n ? ' on' : '') }, i < n ? icon(kind === '1' ? 'gamepad' : 'star') : h('span', {}, fa(i + 1))))),
+    h('p', { class: 'mut', style: 'margin-top:8px' }, kind === '1' ? 'هر بازی ۱ ساعته = یک مهر دسته. پُر شدن کارت: ' + L.r1 : 'هر بازی ۱.۵ ساعته (یا بیشتر) = یک مهر ستاره. با ' + fa(L.need15) + ' کارت پُر: ' + L.r15));
+}
+function loyView(u) {
+  const L = S.db.loyalty;
+  return h('div', {}, h('div', { class: 'loys' }, loyCard('1', u), loyCard('15', u)),
+    h('div', { class: 'card', style: 'margin-top:12px' }, h('h3', {}, 'جایزه‌های من'),
+      h('p', {}, 'کارت ۱ ساعته‌ی پُر: ', h('b', {}, fa(u.loy.c1)), u.loy.c1 ? ' ← ' + L.r1 + ' آماده است!' : ''),
+      h('p', {}, 'کارت ۱.۵ ساعته‌ی پُر: ', h('b', {}, fa(u.loy.c15) + ' از ' + fa(L.need15)), u.loy.c15 >= L.need15 ? ' ← ' + L.r15 + ' آماده است!' : ''),
+      h('p', { class: 'mut' }, 'برای استفاده از جایزه، کارت را به مدیر نشان بده.')));
+}
+function vLB() {
+  const box = h('div', { class: 'card' }), tabs = [['day', 'امروز'], ['week', '۷ روز اخیر'], ['month', '۳۰ روز اخیر']];
+  box.append(h('div', { class: 'seg' }, tabs.map(([k, l]) => h('button', { class: S.lbTab === k ? 'on' : '', onclick: () => { S.lbTab = k; render(); } }, l))));
+  const from = Math.max(S.db.lbResetAt, S.lbTab === 'day' ? dayStart(S.db.T) : S.db.T - (S.lbTab === 'week' ? 7 : 30) * 864e5), m = {};
+  S.db.sessions.forEach(s => { if (s.status === 'done' && s.endT >= from) m[s.userId] = (m[s.userId] || 0) + s.minutes; });
+  const rows = Object.entries(m).filter(([id]) => user(id)).sort((a, b) => b[1] - a[1]).slice(0, 10);
+  box.append(rows.length ? h('ul', { class: 'lb' }, rows.map(([id, mi], i) => h('li', {}, h('span', { class: 'rank r' + (i + 1) }, fa(i + 1)), avatar(user(id), 36), h('b', { style: 'flex:1' }, user(id).name), h('span', {}, hours(mi) + ' ساعت'))))
+    : h('p', { class: 'mut', style: 'margin-top:10px' }, 'هنوز کسی بازی نکرده.'));
+  return box;
+}
+function vMe() {
+  const u = me();
+  return h('div', {}, h('h2', {}, icon('user'), 'حساب من'), h('div', { class: 'card' }, h('div', { class: 'row' }, avatar(u, 64), h('div', {}, h('b', {}, u.name), h('div', { class: 'mut' }, 'مجموع بازی: ' + hours(totalMin(u.id)) + ' ساعت'))),
+    h('label', { class: 'f' }, 'تغییر عکس پروفایل'),
+    h('input', { type: 'file', accept: 'image/*', onchange: async e => { try { API.setPhoto(await resizePhoto(e.target.files[0])); render(); toast('عکس عوض شد'); } catch (x) { toast(x.message, true); } } }),
+    h('button', { class: 'btn sec', style: 'margin-top:14px', onclick: () => { S.session = null; S.demo = false; render(); } }, 'خروج از حساب')));
+}
+function vCust() {
+  const f = h('section'), t = S.tab;
+  if (t === 'home') { const g = h('div', { class: 'grid' }); S.db.stations.forEach(s => g.append(stCard(s))); const ms = mySess(); if (ms) f.append(ms); f.append(h('h2', {}, icon('tv'), 'کنسول‌ها'), g); }
+  else if (t === 'card') f.append(h('h2', {}, icon('card'), 'کارت وفاداری من'), loyView(me()));
+  else if (t === 'top') f.append(h('h2', {}, icon('trophy'), 'برترین بازیکنان'), vLB());
+  else f.append(vMe());
+  return f;
+}
+
+/* ---------- admin ---------- */
+function billModal(s) {
+  if (s.status !== 'done') return;
+  const u = user(s.userId), L = S.db.loyalty;
+  const line = (a, b) => h('div', { class: 'row sp', style: 'padding:6px 0;border-bottom:1px dashed var(--line)' }, h('span', { class: 'mut' }, a), h('b', {}, b));
+  modal('فاکتور بازی', h('div', {}, line('مشتری', u ? u.name : '—'), line('کنسول', unitName(s.unitId)), line('مدت', fa(s.minutes) + ' دقیقه'), line('نرخ ساعتی', money(s.rate) + ' تومان'),
+    line('مبلغ قابل پرداخت', money(s.cost) + ' تومان'),
+    s.stamp ? h('p', { style: 'margin-top:10px' }, 'یک مهر ', s.stamp === '15' ? 'ستاره' : 'دسته', ' به کارت مشتری اضافه شد.', s.cardFull ? ' 🎉 کارت پُر شد!' : '') : h('p', { class: 'mut', style: 'margin-top:10px' }, 'کمتر از ۱ ساعت: مهری ثبت نشد.')),
+    [{ label: 'بستن' }]);
+}
+function userRow(s) {
+  const u = user(s.userId);
+  return h('div', { class: 'row sp', style: 'padding:10px 0;border-bottom:1px solid var(--line)' },
+    h('div', { class: 'row' }, avatar(u || { name: '?' }, 36), h('div', {}, h('b', {}, u ? u.name : '—'), h('div', { class: 'mut' }, unitName(s.unitId) + ' — ' + money(unitOf(s.unitId) ? unitOf(s.unitId).price : 0) + ' ت/ساعت'))));
+}
+function vDash() {
+  const f = h('section'), ss = S.db.sessions, d0 = dayStart(S.db.T);
+  const done = ss.filter(s => s.status === 'done' && s.endT >= d0), pend = ss.filter(s => s.status === 'pending'), run = ss.filter(s => ['countdown', 'running'].includes(s.status));
+  f.append(h('h2', {}, icon('dash'), 'داشبورد'), h('div', { class: 'tiles' },
+    h('div', { class: 'tile' }, h('span', { class: 'mut' }, 'درآمد امروز'), h('b', {}, money(done.reduce((a, s) => a + s.cost, 0))), h('span', { class: 'mut' }, 'تومان')),
+    h('div', { class: 'tile' }, h('span', { class: 'mut' }, 'بازی‌های تمام‌شده امروز'), h('b', {}, fa(done.length))),
+    h('div', { class: 'tile' }, h('span', { class: 'mut' }, 'در حال بازی'), h('b', {}, fa(run.length))),
+    h('div', { class: 'tile' }, h('span', { class: 'mut' }, 'درخواست‌های منتظر'), h('b', {}, fa(pend.length)))));
+  f.append(h('h2', {}, 'درخواست‌های اجاره'));
+  f.append(h('div', { class: 'card' }, pend.length ? pend.map(s => h('div', {}, userRow(s), h('div', { class: 'row', style: 'padding:8px 0' },
+    h('button', { class: 'btn ok sm', onclick: act(() => API.approve(s.id), 'تأیید شد؛ ۵ ثانیه‌ی دیگر شروع می‌شود') }, icon('check'), 'تأیید'),
+    h('button', { class: 'btn bad sm', onclick: act(() => API.reject(s.id)) }, icon('x'), 'رد')))) : h('span', { class: 'mut' }, 'درخواستی نیست.')));
+  f.append(h('h2', {}, 'بازی‌های در حال اجرا'));
+  f.append(h('div', { class: 'card' }, run.length ? run.map(s => h('div', {}, userRow(s), h('div', { class: 'row sp', style: 'padding:8px 0' },
+    s.status === 'countdown' ? h('b', {}, 'شروع تا ', h('span', { 'data-live': 'cd', 'data-sid': s.id }, '۵')) : h('div', {}, h('b', { 'data-live': 'time', 'data-sid': s.id, style: 'font-size:1.3rem' }, ''), h('span', { class: 'mut' }, ' — '), h('b', { 'data-live': 'cost', 'data-sid': s.id })),
+    h('button', { class: 'btn bad sm', onclick: () => { try { const r = API.stop(s.id); render(); billModal(r); } catch (e) { toast(e.message, true); } } }, s.status === 'countdown' ? 'لغو' : 'پایان و فاکتور')))) : h('span', { class: 'mut' }, 'الان کسی بازی نمی‌کند.')));
+  f.append(h('h2', {}, icon('trophy'), 'برترین بازیکنان'), vLB());
+  return f;
+}
+function edStation(st) {
+  const row = h('div', { class: 'ed' });
+  row.append(h('div', { class: 'row' }, inp(st.label, guard(v => API.renameStation(st.id, v)), { maxlength: 20, 'aria-label': 'نام' }),
+    h('button', { class: 'btn sec sm', 'aria-label': 'بالا', onclick: act(() => API.moveStation(st.id, -1)) }, icon('up')),
+    h('button', { class: 'btn sec sm', 'aria-label': 'پایین', onclick: act(() => API.moveStation(st.id, 1)) }, icon('down')),
+    h('button', { class: 'btn bad sm', 'aria-label': 'حذف', onclick: () => modal('حذف ' + st.label + '؟', h('p', { class: 'mut' }, 'این ایستگاه و کنسول‌هایش حذف می‌شود.'), [{ label: 'بله، حذف', cls: 'bad', fn: () => { act(() => API.delStation(st.id))(); } }, { label: 'نه', cls: 'sec' }]) }, icon('trash'))));
+  row.append(h('div', { class: 'row sp' }, h('span', {}, 'غیرفعال'), sw(st.disabled, guard(v => API.flag(st.id, 'disabled', v)))));
+  row.append(h('div', { class: 'row sp' }, h('span', {}, 'قفل مشترک (با اجاره‌ی یکی، بقیه‌ی همین ایستگاه قفل شود)'), sw(st.shared, guard(v => API.flag(st.id, 'shared', v)))));
+  st.units.forEach(u => row.append(h('div', { class: 'row' }, h('span', { class: 'badge ' + (u.type === 'ps5' ? 'p5' : '') }, u.type.toUpperCase()),
+    inp(money(u.price), guard(v => API.setPrice(u.id, v)), { inputmode: 'numeric', 'aria-label': 'قیمت ساعتی' }), h('span', { class: 'mut' }, 'تومان/ساعت'),
+    h('button', { class: 'btn sec sm', 'aria-label': 'حذف کنسول', onclick: act(() => API.delUnit(st.id, u.id)) }, icon('trash')))));
+  row.append(h('div', { class: 'row' }, h('button', { class: 'btn sec sm', onclick: act(() => API.addUnit(st.id, 'ps4')) }, icon('plus'), 'PS4'), h('button', { class: 'btn sec sm', onclick: act(() => API.addUnit(st.id, 'ps5')) }, icon('plus'), 'PS5')));
+  return h('div', { class: 'card' }, h('div', { class: 'row' }, h('div', { class: 'num' }, st.room ? 'VIP' : st.label), h('b', {}, st.room ? 'اتاق' : 'ایستگاه')), row);
+}
+function vCons() {
+  const f = h('section', {}, h('h2', {}, icon('tv'), 'مدیریت کنسول‌ها'));
+  const nm = h('input', { maxlength: 20, placeholder: 'نام (مثلاً ۹ یا اتاق ۲)', 'aria-label': 'نام جدید' });
+  f.append(h('div', { class: 'card' }, h('div', { class: 'row' }, nm, h('button', { class: 'btn sm', onclick: act(() => API.addStation(nm.value, false)) }, icon('plus'), 'ایستگاه'), h('button', { class: 'btn sm sec', onclick: act(() => API.addStation(nm.value, true)) }, icon('plus'), 'اتاق'))));
+  S.db.stations.forEach(s => f.append(edStation(s)));
+  return f;
+}
+function stepper(u, kind) {
+  const L = S.db.loyalty;
+  return h('div', { class: 'row' }, h('span', { class: 'mut' }, kind === '1' ? 'مهر دسته' : 'مهر ستاره'),
+    h('button', { class: 'btn sec sm', 'aria-label': 'کم', onclick: act(() => API.adjStamp(u.id, kind, -1)) }, icon('minus')), h('b', {}, fa(u.loy['s' + kind]) + '/' + fa(L.slots)),
+    h('button', { class: 'btn sec sm', 'aria-label': 'زیاد', onclick: act(() => API.adjStamp(u.id, kind, 1)) }, icon('plus')), h('span', { class: 'mut' }, 'کارت پُر: ' + fa(u.loy['c' + kind])));
+}
+function vUsers() {
+  const f = h('section', {}, h('h2', {}, icon('user'), 'مشتریان')), L = S.db.loyalty;
+  S.db.users.filter(u => u.role !== 'admin').forEach(u => f.append(h('div', { class: 'card' },
+    h('div', { class: 'row' }, avatar(u, 44), h('div', {}, h('b', {}, u.name), h('div', { class: 'mut' }, 'مجموع بازی: ' + hours(totalMin(u.id)) + ' ساعت'))),
+    h('div', { class: 'ed' }, stepper(u, '1'), stepper(u, '15'), h('div', { class: 'row' },
+      h('button', { class: 'btn ok sm', disabled: u.loy.c1 < 1, onclick: act(() => API.redeem(u.id, '1'), 'جایزه ثبت شد: ' + L.r1) }, 'استفاده: ' + L.r1),
+      h('button', { class: 'btn ok sm', disabled: u.loy.c15 < L.need15, onclick: act(() => API.redeem(u.id, '15'), 'جایزه ثبت شد') }, 'استفاده: کنسول به خانه')),
+      h('div', { class: 'row' },
+        h('button', { class: 'btn sec sm', onclick: () => { const i = h('input', { type: 'password', maxlength: 64, autocomplete: 'new-password' }); modal('رمز جدید برای ' + u.name, h('div', {}, h('label', { class: 'f' }, 'رمز جدید (حداقل ۸ کاراکتر)'), i), [{ label: 'ذخیره', fn: () => { act(() => API.resetPw(u.id, i.value), 'رمز عوض شد')(); } }, { label: 'انصراف', cls: 'sec' }]); } }, 'تغییر رمز'),
+        h('button', { class: 'btn bad sm', onclick: () => modal('حذف ' + u.name + '؟', h('p', { class: 'mut' }, 'حساب و مهرهایش حذف می‌شود.'), [{ label: 'بله، حذف', cls: 'bad', fn: () => { act(() => API.delUser(u.id))(); } }, { label: 'نه', cls: 'sec' }]) }, icon('trash'), 'حذف حساب'))))));
+  return f;
+}
+function vSet() {
+  const f = h('section', {}, h('h2', {}, icon('gear'), 'تنظیمات')), L = S.db.loyalty;
+  const fld = (l, el) => h('div', {}, h('label', { class: 'f' }, l), el);
+  f.append(h('div', { class: 'card' }, h('h3', {}, 'اطلاعات گیم‌نت'), fld('نام', inp(S.db.shop.name, guard(v => API.setShop('name', v)), { maxlength: 24 })), fld('شعار', inp(S.db.shop.tagline, guard(v => API.setShop('tagline', v)), { maxlength: 70 }))));
+  const rl = h('div', { class: 'card' }, h('h3', {}, 'قوانین (همه می‌بینند)'));
+  S.db.rules.forEach(r => rl.append(h('div', { class: 'row', style: 'margin-top:8px' }, inp(r.text, guard(v => API.editRule(r.id, v)), { style: 'flex:1', 'aria-label': 'قانون' }), h('button', { class: 'btn bad sm', 'aria-label': 'حذف', onclick: act(() => API.delRule(r.id)) }, icon('trash')))));
+  const nr = h('input', { maxlength: 140, placeholder: 'قانون جدید', 'aria-label': 'قانون جدید' });
+  rl.append(h('div', { class: 'row', style: 'margin-top:10px' }, nr, h('button', { class: 'btn sm', onclick: act(() => API.addRule(nr.value)) }, icon('plus'), 'افزودن')));
+  f.append(rl);
+  f.append(h('div', { class: 'card' }, h('h3', {}, 'کارت وفاداری'), fld('تعداد جای مهر هر کارت (۲ تا ۶)', inp(fa(L.slots), guard(v => API.setLoy('slots', v)), { inputmode: 'numeric' })),
+    fld('جایزه‌ی کارت ۱ ساعته‌ی پُر', inp(L.r1, guard(v => API.setLoy('r1', v)))), fld('جایزه‌ی کارت ۱.۵ ساعته', inp(L.r15, guard(v => API.setLoy('r15', v)))),
+    fld('چند کارت ۱.۵ ساعته‌ی پُر برای این جایزه', inp(fa(L.need15), guard(v => API.setLoy('need15', v)), { inputmode: 'numeric' }))));
+  f.append(h('div', { class: 'card' }, h('h3', {}, 'رتبه‌بندی'), h('p', { class: 'mut' }, 'صفر کردن برترین بازیکنان (سوابق مالی پاک نمی‌شود).'), h('button', { class: 'btn bad sm', onclick: act(() => API.resetLB(), 'رتبه‌بندی صفر شد') }, 'ریست رتبه‌بندی')));
+  return f;
+}
+function vHist() {
+  const done = S.db.sessions.filter(s => s.status === 'done').sort((a, b) => b.endT - a.endT).slice(0, 200);
+  const csv = () => {
+    const q = v => { v = String(v); if (/^[=+\-@\t\r]/.test(v)) v = "'" + v; return '"' + v.replace(/"/g, '""') + '"'; };
+    const rows = [['تاریخ', 'کاربر', 'کنسول', 'دقیقه', 'مبلغ (تومان)']].concat(done.map(s => [fmtDate(s.endT), (user(s.userId) || { name: '—' }).name, unitName(s.unitId), s.minutes, s.cost]));
+    const a = h('a', { href: URL.createObjectURL(new Blob(['﻿' + rows.map(r => r.map(q).join(',')).join('\n')], { type: 'text/csv;charset=utf-8' })), download: 'gameland-history.csv' });
+    document.body.append(a); a.click(); a.remove();
+  };
+  return h('section', {}, h('h2', {}, icon('list'), 'سوابق بازی‌ها'), h('div', { class: 'card' }, h('button', { class: 'btn sm sec', onclick: csv }, 'خروجی CSV'),
+    h('div', { class: 'scroll' }, h('table', {}, h('thead', {}, h('tr', {}, ['تاریخ', 'مشتری', 'کنسول', 'مدت', 'مبلغ'].map(x => h('th', {}, x)))),
+      h('tbody', {}, done.map(s => h('tr', {}, h('td', {}, fmtDate(s.endT)), h('td', {}, (user(s.userId) || { name: '—' }).name), h('td', {}, unitName(s.unitId)), h('td', {}, fa(s.minutes) + ' دقیقه'), h('td', {}, money(s.cost)))))))));
+}
+const vAdmin = () => ({ dash: vDash, cons: vCons, users: vUsers, set: vSet, hist: vHist }[S.tab] || vDash)();
+
+/* ---------- shell ---------- */
+const TABS = {
+  user: [['home', 'کنسول‌ها', 'tv'], ['card', 'کارت من', 'card'], ['top', 'برترین‌ها', 'trophy'], ['me', 'حساب من', 'user']],
+  admin: [['dash', 'داشبورد', 'dash'], ['cons', 'کنسول‌ها', 'tv'], ['users', 'مشتریان', 'user'], ['set', 'تنظیمات', 'gear'], ['hist', 'سوابق', 'list']]
+};
+function live() {
+  document.querySelectorAll('[data-live]').forEach(n => {
+    const s = sessOf(n.dataset.sid); if (!s) return; const k = n.dataset.live;
+    if (k === 'time') n.textContent = fmtDur(S.db.T - (s.startT || S.db.T));
+    else if (k === 'cost') n.textContent = money(costOf(s)) + ' تومان';
+    else if (k === 'cd') n.textContent = fa(Math.max(0, Math.ceil((s.goAt - Date.now()) / 1000)));
+  });
+}
+function render() {
+  $('#shopname').textContent = S.db.shop.name; document.title = S.db.shop.name + ' | نسخه نمایشی';
+  $('#dUser').classList.toggle('on', !!(S.demo && S.session && S.session.role === 'user'));
+  $('#dAdmin').classList.toggle('on', !!(S.demo && S.session && S.session.role === 'admin'));
+  $('#demobar').hidden = !S.demo;
+  const app = $('#app'), nav = $('#nav'); app.replaceChildren(vRules()); nav.replaceChildren();
+  if (!S.session) { app.append(vAuth()); return; }
+  const role = S.session.role; app.append(role === 'admin' ? vAdmin() : vCust());
+  TABS[role].forEach(([k, l, ic]) => nav.append(h('button', { class: S.tab === k ? 'on' : '', 'aria-current': S.tab === k ? 'page' : null, onclick: () => { S.tab = k; render(); scrollTo(0, 0); } }, icon(ic), l)));
+  live();
+}
+function tick() {
+  const now = Date.now(); S.db.T += (now - S.lastReal) * S.speed; S.lastReal = now; let ch = false;
+  S.db.sessions.forEach(s => { if (s.status === 'countdown' && now >= s.goAt) { s.status = 'running'; s.startT = S.db.T; ch = true; } });
+  if (ch) { save(); render(); } else live();
+  if (S.session && S.session.role === 'admin' && !S.demo && now - S.lastAct > 9e5) { S.session = null; render(); toast('به‌خاطر بی‌کاری از پنل مدیر خارج شدی'); }
+  if (now - (S.lastSave || 0) > 5000) { S.lastSave = now; save(); }
+}
+function setTheme(t) {
+  document.documentElement.dataset.theme = t; try { localStorage.setItem('gameland_theme', t); } catch (e) { }
+  const b = $('#themeBtn'); b.replaceChildren(icon(t === 'night' ? 'sun' : 'moon')); b.setAttribute('aria-label', t === 'night' ? 'حالت روز' : 'حالت شب');
+}
+function demoAs(role) { S.demo = true; S.session = role === 'admin' ? { userId: 'u_admin', role } : { userId: 'u_demo', role }; S.tab = role === 'admin' ? 'dash' : 'home'; render(); }
+(async function boot() {
+  try { S.db = load() || await seed(); } catch (e) { S.db = await seed(); }
+  S.db.T = Math.max(S.db.T, Date.now()); S.lastReal = Date.now(); save();
+  let th = 'night'; try { th = localStorage.getItem('gameland_theme') || 'night'; } catch (e) { } setTheme(th === 'day' ? 'day' : 'night');
+  $('#logo').append(icon('gamepad'));
+  $('#themeBtn').onclick = () => setTheme(document.documentElement.dataset.theme === 'night' ? 'day' : 'night');
+  $('#dUser').onclick = () => demoAs('user'); $('#dAdmin').onclick = () => demoAs('admin');
+  $('#speed').onchange = e => { S.speed = [1, 60, 300].includes(+e.target.value) ? +e.target.value : 1; };
+  $('#resetBtn').onclick = () => modal('بازنشانی داده‌های نمایشی؟', h('p', { class: 'mut' }, 'همه‌ی داده‌ها به حالت اول برمی‌گردد.'), [{ label: 'بله', cls: 'bad', fn: async () => { try { localStorage.removeItem(LS); } catch (e) { } S.db = await seed(); demoAs('user'); } }, { label: 'نه', cls: 'sec' }]);
+  ['pointerdown', 'keydown'].forEach(ev => addEventListener(ev, () => { S.lastAct = Date.now(); }, { passive: true }));
+  demoAs('user'); $('#boot').remove(); setInterval(tick, 250);
+})();
+</script>
+</body></html>
